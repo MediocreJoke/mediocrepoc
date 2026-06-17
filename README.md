@@ -1,1 +1,1 @@
-[PoC starten]([https://DEINNAME.github.io/electron-nav-poc/](https://mediocrejoke.github.io/mediocrepoc/))
+[PoC starten](https://mediocrejoke.github.io/mediocrepoc/)
